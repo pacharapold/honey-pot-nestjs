@@ -1,0 +1,23 @@
+@contentType = application/json
+@baseUrl = http://localhost:4001
+
+###
+# @name ping
+GET {{baseUrl}}/ping
+Content-Type:  {{contentType}}
+
+###
+
+# @name test-01
+POST {{baseUrl}}/pingtest/foo/bar?yyy=true
+Content-Type:  {{contentType}}
+
+{"foo":"bar"}
+
+###
+
+# @name stats
+GET {{baseUrl}}/honeypot-stats
+Content-Type:  {{contentType}}
+
+###
