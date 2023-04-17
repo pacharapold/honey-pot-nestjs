@@ -4,25 +4,20 @@ import { CRequest, CRequestStat } from './constant';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   collect(req: Request) {
+    const id = Date.now().toString(36);
     CRequest.push({
-      id: CRequestStat.counter++,
+      id,
       ts: Date.now(),
       path: req.path,
-      method: req.method,
+      method: req.method as 'GET' | 'PUT' | 'POST' | 'DELETE',
       header: req.headers,
       body: req.body ?? null,
       queryStr: req.query ?? null,
       hide: false,
     });
-    CRequestStat.method[req.method.toUpperCase()].push(CRequestStat.counter);
-  }
-
-  getRequests() {
-    return { result: { CRequestStat, CRequest } };
+    CRequestStat.counter++;
+    CRequestStat.method[req.method.toUpperCase()].push(id);
+    return CRequestStat.customResponse;
   }
 }

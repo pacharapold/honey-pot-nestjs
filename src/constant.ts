@@ -11,4 +11,7 @@ export const CRequestStat = {
   },
   hide: [],
   counter: 0,
+  customResponse: {
+    result: 'SUCCESS',
+  },
 };

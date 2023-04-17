@@ -9,15 +9,55 @@ Content-Type:  {{contentType}}
 ###
 
 # @name test-01
+GET {{baseUrl}}/pingtest/foo/bar?yyy=true
+Content-Type:  {{contentType}}
+
+###
+# @name test-02
 POST {{baseUrl}}/pingtest/foo/bar?yyy=true
 Content-Type:  {{contentType}}
 
 {"foo":"bar"}
 
 ###
-
-# @name stats
-GET {{baseUrl}}/honeypot-stats
+# @name test-03
+PUT {{baseUrl}}/pingtest/put
 Content-Type:  {{contentType}}
 
+{"bar":"foo"}
+
+###
+# @name test-04
+DELETE {{baseUrl}}/pingtest/foo/bar?yyy=true
+Content-Type:  {{contentType}}
+
+###
+
+# @name stats
+GET {{baseUrl}}/stats
+Content-Type:  {{contentType}}
+
+###
+
+# @name requests
+GET {{baseUrl}}/requests?method=POST,GET
+Content-Type:  {{contentType}}
+
+###
+
+# @name request
+GET {{baseUrl}}/request/lgkyhqjx
+Content-Type:  {{contentType}}
+
+###
+
+# @name response
+POST {{baseUrl}}/response
+Content-Type:  {{contentType}}
+
+{
+    "result": {
+        "msg": "SUCCESS"
+    }
+}
 ###

@@ -1,8 +1,8 @@
 export type TRequestGeneral = {
-  id: number;
+  id: string;
   ts: number;
   path: string;
-  method: string;
+  method: 'GET' | 'PUT' | 'POST' | 'DELETE';
   header: object;
   body?: object;
   queryStr?: object;
