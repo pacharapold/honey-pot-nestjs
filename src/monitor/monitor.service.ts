@@ -18,17 +18,38 @@ export class MonitorService {
     limit,
     order,
     method,
+    path,
+    matchPath,
+    from,
+    to,
   }: {
-    limit: string;
-    order: 'ASC' | 'DESC';
-    method: string;
+    limit?: string;
+    order?: 'ASC' | 'DESC';
+    method?: string;
+    path?: string;
+    matchPath?: string; // true | false
+    from?: string;
+    to?: string;
   }) {
     const req = CRequest.filter((item) =>
-      method.split(',').includes(item.method),
+      method ? method.split(',').includes(item.method) : true,
     )
+      .filter((item) =>
+        path
+          ? matchPath === 'true'
+            ? item.path === `/${path}`
+            : item.path.includes(`/${path}`)
+          : true,
+      )
+      .filter((item) =>
+        from ? item.ts >= this.convertDateToTimestamp(from) : true,
+      )
+      .filter((item) =>
+        to ? item.ts <= this.convertDateToTimestamp(to) : true,
+      )
       .slice(0, Number(limit || CRequest.length))
       .map((item) => {
-        return { timestamp: new Date(item.ts).toLocaleString(), ...item };
+        return { timestamp: new Date(item.ts).toISOString(), ...item };
       });
     return {
       result: {
@@ -46,5 +67,15 @@ export class MonitorService {
     CRequestStat.customResponse = body;
     console.log();
     return { result: body };
+  }
+
+  //convert yyyy-MM-dd as string to timestamp
+  convertDateToTimestamp(date: string): number {
+    const dateArray = date.split('-');
+    return new Date(
+      Number(dateArray[0]),
+      Number(dateArray[1]) - 1,
+      Number(dateArray[2]),
+    ).getTime();
   }
 }
