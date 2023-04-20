@@ -8,27 +8,27 @@ Content-Type:  {{contentType}}
 
 ###
 
-# @name test-01
-GET {{baseUrl}}/pingtest/foo/bar?yyy=true
+# @name test-get
+GET {{baseUrl}}/my-testing-path?foo=bar&bar=foo
 Content-Type:  {{contentType}}
 
 ###
-# @name test-02
-POST {{baseUrl}}/pingtest/foo/bar?yyy=true
+# @name test-post
+POST {{baseUrl}}/my-testing-path
 Content-Type:  {{contentType}}
 
 {"foo":"bar"}
 
 ###
-# @name test-03
-PUT {{baseUrl}}/pingtest/put
+# @name test-put
+PUT {{baseUrl}}/my-testing-path
 Content-Type:  {{contentType}}
 
 {"bar":"foo"}
 
 ###
-# @name test-04
-DELETE {{baseUrl}}/pingtest/foo/bar?yyy=true
+# @name test-delete
+DELETE {{baseUrl}}/my-testing-path?id=foo&action=bar
 Content-Type:  {{contentType}}
 
 ###
@@ -39,8 +39,18 @@ Content-Type:  {{contentType}}
 
 ###
 
+
+@method=POST,GET
+@limit=20
+@offset=10
+@order=DESC
+@path=my-testing-path
+@matchPath=false
+@from=2023-04-01
+@to=2023-04-17
+
 # @name requests
-GET {{baseUrl}}/requests?method=POST,GET
+GET {{baseUrl}}/requests?method={{method}}&limit={{limit}}&offset={{offset}}&order={{order}}&path={{path}}&matchPath={{matchPath}}&from={{from}}&to={{to}}
 Content-Type:  {{contentType}}
 
 ###

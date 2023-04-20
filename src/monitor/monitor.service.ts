@@ -22,6 +22,7 @@ export class MonitorService {
     matchPath,
     from,
     to,
+    offset,
   }: {
     limit?: string;
     order?: 'ASC' | 'DESC';
@@ -30,6 +31,7 @@ export class MonitorService {
     matchPath?: string; // true | false
     from?: string;
     to?: string;
+    offset?: string;
   }) {
     const req = CRequest.filter((item) =>
       method ? method.split(',').includes(item.method) : true,
@@ -47,7 +49,7 @@ export class MonitorService {
       .filter((item) =>
         to ? item.ts <= this.convertDateToTimestamp(to) : true,
       )
-      .slice(0, Number(limit || CRequest.length))
+      .slice(offset ? Number(offset) : 0, Number(limit || CRequest.length))
       .map((item) => {
         return { timestamp: new Date(item.ts).toISOString(), ...item };
       });
