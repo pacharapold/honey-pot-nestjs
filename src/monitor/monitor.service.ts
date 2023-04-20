@@ -65,7 +65,6 @@ export class MonitorService {
 
   response(body) {
     CRequestStat.customResponse = body;
-    console.log();
     return { result: body };
   }
 
